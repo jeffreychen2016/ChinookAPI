@@ -19,16 +19,22 @@ namespace ChinookAPI.Controllers
             _chinook = new Chinook();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("GetInvoicesBySalesAgentID/{id}")]
         public IActionResult GetInvoicesBySalesAgentID(int id)
         {
             return Ok(_chinook.GetInvoicesBySalesAgentID(id));
         }
 
-        [HttpGet]
+        [HttpGet("GetAllInvoices")]
         public IActionResult GetAllInvoices()
         {
             return Ok(_chinook.GetAllInvoices());
+        }
+
+        [HttpGet("GetCountOfItemsByInvoiceID/{id}")]
+        public IActionResult GetCountOfItemsByInvoiceID(int id)
+        {
+            return Ok(_chinook.GetCountOfItemsByInvoiceID(id));
         }
     }
 }
