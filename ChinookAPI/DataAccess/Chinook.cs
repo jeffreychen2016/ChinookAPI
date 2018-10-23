@@ -92,5 +92,24 @@ namespace ChinookAPI.DataAccess
                 return invoices;
             };
         }
+
+        public int GetCountOfItemsByInvoiceID(int id)
+        {
+            using (var dbConnection = new SqlConnection(ConnectionString))
+            {
+                dbConnection.Open();
+
+                var command = dbConnection.CreateCommand();
+                command.CommandText = @"SELECT 
+                                            Counts = COUNT(*)
+                                        FROM InvoiceLine
+                                        WHERE InvoiceId = @id";
+
+                command.Parameters.AddWithValue("@id",id);
+                var result = (int)command.ExecuteScalar();
+
+                return result;
+            }
+        }
     };
 }
