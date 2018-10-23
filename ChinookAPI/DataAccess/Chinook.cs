@@ -19,6 +19,7 @@ namespace ChinookAPI.DataAccess
 
                 var command = dbConnection.CreateCommand();
                 command.CommandText = @"SELECT 
+                                        FullName = Customer.FirstName + ' ' + Customer.LastName,
                                         Invoice.*
                                         FROM Invoice
                                         INNER JOIN Customer
@@ -37,6 +38,7 @@ namespace ChinookAPI.DataAccess
                     var invoice = new Invoice
                     {
                         InvoiceId = (int)result["InvoiceId"],
+                        FullName = result["FullName"].ToString(),
                         InvoiceDate = (DateTime)result["InvoiceDate"], 
                         BillingAddress = result["BillingAddress"].ToString(),
                         BillingCity = result["BillingCity"].ToString(),
