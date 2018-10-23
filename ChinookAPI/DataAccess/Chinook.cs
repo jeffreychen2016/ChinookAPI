@@ -38,7 +38,7 @@ namespace ChinookAPI.DataAccess
                     var invoice = new Invoice
                     {
                         InvoiceId = (int)result["InvoiceId"],
-                        FullName = result["FullName"].ToString(),
+                        ClientFullName = result["FullName"].ToString(),
                         InvoiceDate = (DateTime)result["InvoiceDate"], 
                         BillingAddress = result["BillingAddress"].ToString(),
                         BillingCity = result["BillingCity"].ToString(),
@@ -54,5 +54,43 @@ namespace ChinookAPI.DataAccess
                 return Invoices;
             };
         }
-    }
+
+        public List<Invoice> GetAllInvoices()
+        {
+            using (var dbConnection = new SqlConnection(ConnectionString))
+            {
+                dbConnection.Open();
+
+                var command = dbConnection.CreateCommand();
+                command.CommandText = @"SELECT 
+                                            Invoice.Total
+	                                        ,CustomerName = Customer.FirstName + ' ' + Customer.LastName
+	                                        ,Invoice.BillingCountry
+	                                        ,SaleAgent = Employee.FirstName + ' ' + Employee.LastName
+                                        FROM Invoice
+                                        INNER JOIN Customer
+                                            ON Invoice.CustomerId = Customer.CustomerId
+                                        INNER JOIN Employee
+                                            ON Customer.SupportRepId = Employee.EmployeeId";
+
+                var result = command.ExecuteReader();
+                var invoices = new List<Invoice>();
+
+                while (result.Read())
+                {
+                    var invoice = new Invoice
+                    {
+                        Total = (decimal)result["Total"],
+                        ClientFullName = result["CustomerName"].ToString(),
+                        BillingCountry = result["BillingCountry"].ToString(),
+                        SalesAgentFullName = result["SaleAgent"].ToString()
+                    };
+
+                    invoices.Add(invoice);
+                }
+
+                return invoices;
+            };
+        }
+    };
 }

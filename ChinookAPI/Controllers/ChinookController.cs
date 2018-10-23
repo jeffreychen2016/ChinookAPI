@@ -24,5 +24,11 @@ namespace ChinookAPI.Controllers
         {
             return Ok(_chinook.GetInvoicesBySalesAgentID(id));
         }
+
+        [HttpGet]
+        public IActionResult GetAllInvoices()
+        {
+            return Ok(_chinook.GetAllInvoices());
+        }
     }
 }

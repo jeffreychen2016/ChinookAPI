@@ -8,7 +8,8 @@ namespace ChinookAPI.Models
     public class Invoice
     {
         public int InvoiceId { get; set; }
-        public string FullName { get; set; }
+        public string ClientFullName { get; set; }
+        public string SalesAgentFullName { get; set; }
         public DateTime? InvoiceDate { get; set; }
         public string BillingAddress { get; set; }
         public string BillingCity { get; set; }
