@@ -139,5 +139,26 @@ namespace ChinookAPI.DataAccess
                 return result == 1;
             }
         }
+
+        public bool UpdateEmployeeName(int id, Employee employee)
+        {
+            using (var dbConnection = new SqlConnection(ConnectionString))
+            {
+                dbConnection.Open();
+
+                var command = dbConnection.CreateCommand();
+                command.CommandText = @"UPDATE Employee
+                                        SET LastName = @LastName, FirstName = @FirstName
+                                        WHERE EmployeeId = @id";
+
+                command.Parameters.AddWithValue("@id",id);
+                command.Parameters.AddWithValue("@LastName", employee.LastName);
+                command.Parameters.AddWithValue("@FirstName", employee.FirstName);
+
+                var result = command.ExecuteNonQuery();
+
+                return result == 1;
+            }
+        }
     };
 }
