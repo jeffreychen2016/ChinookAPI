@@ -17,5 +17,6 @@ namespace ChinookAPI.Models
         public string BillingCountry { get; set; }
         public string BillingPostalCode { get; set; }
         public decimal? Total { get; set; }
+        public int CustomerId { get; set; }
     }
 }

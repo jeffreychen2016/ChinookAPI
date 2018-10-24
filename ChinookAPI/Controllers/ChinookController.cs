@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ChinookAPI.DataAccess;
+using ChinookAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,6 +36,18 @@ namespace ChinookAPI.Controllers
         public IActionResult GetCountOfItemsByInvoiceID(int id)
         {
             return Ok(_chinook.GetCountOfItemsByInvoiceID(id));
+        }
+
+        [HttpPost("AddNewInvoice")]
+        public IActionResult AddNewInvoice(Invoice invoice)
+        {
+            return Ok(_chinook.AddNewInvoice(invoice));
+        }
+
+        [HttpPut("UpdateEmployeeName")]
+        public IActionResult UpdateEmployeeName()
+        {
+            return Ok();
         }
     }
 }

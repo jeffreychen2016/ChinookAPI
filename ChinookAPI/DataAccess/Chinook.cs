@@ -111,5 +111,33 @@ namespace ChinookAPI.DataAccess
                 return result;
             }
         }
+
+        public bool AddNewInvoice(Invoice invoice)
+        {
+
+            using (var dbConnection = new SqlConnection(ConnectionString))
+            {
+                dbConnection.Open();
+
+                var command = dbConnection.CreateCommand();
+                command.CommandText = @"INSERT INTO 
+                                            Invoice (CustomerId,InvoiceDate,BillingAddress,BillingCity,BillingState,BillingCountry,BillingPostalCode,Total)
+                                        VALUES (@CustomerId,@InvoiceDate,@BillingAddress,@BillingCity,@BillingState,@BillingCountry,@BillingPostalCode,@Total)";
+
+                command.Parameters.AddWithValue("@CustomerId",invoice.CustomerId);
+                command.Parameters.AddWithValue("@InvoiceDate", invoice.InvoiceDate);
+                command.Parameters.AddWithValue("@BillingAddress", invoice.BillingAddress);
+                command.Parameters.AddWithValue("@BillingCity", invoice.BillingCity);
+                command.Parameters.AddWithValue("@BillingState", invoice.BillingState);
+                command.Parameters.AddWithValue("@BillingCountry", invoice.BillingCountry);
+                command.Parameters.AddWithValue("@BillingPostalCode", invoice.BillingPostalCode);
+                command.Parameters.AddWithValue("@Total", invoice.Total);
+
+
+                var result = command.ExecuteNonQuery();
+
+                return result == 1;
+            }
+        }
     };
 }
