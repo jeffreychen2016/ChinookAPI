@@ -44,10 +44,10 @@ namespace ChinookAPI.Controllers
             return Ok(_chinook.AddNewInvoice(invoice));
         }
 
-        [HttpPut("UpdateEmployeeName")]
-        public IActionResult UpdateEmployeeName()
+        [HttpPut("UpdateEmployeeName/{id}")]
+        public IActionResult UpdateEmployeeName(int id, Employee employee)
         {
-            return Ok();
+            return Ok(_chinook.UpdateEmployeeName(id,employee));
         }
     }
 }
